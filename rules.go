@@ -896,30 +896,30 @@ func init() {
 		}
 
 		// check for integer value
-		min := math.MinInt64
+		min := int64(math.MinInt64)
 		if rng[0] != "" {
 			_min, err := strconv.ParseFloat(rng[0], 64)
 			if err != nil {
 				panic(errStringToInt)
 			}
-			min = int(_min)
+			min = int64(_min)
 		}
 
-		max := math.MaxInt64
+		max := int64(math.MaxInt64)
 		if rng[1] != "" {
 			_max, err := strconv.ParseFloat(rng[1], 64)
 			if err != nil {
 				panic(errStringToInt)
 			}
-			max = int(_max)
+			max = int64(_max)
 		}
 
 		var errMsg error
 		switch {
 		case rng[0] == "":
-			errMsg = fmt.Errorf("The %s field value can not be greater than %d", field, max)
+			errMsg = fmt.Errorf("the %s field value can not be greater than %d", field, max)
 		case rng[1] == "":
-			errMsg = fmt.Errorf("The %s field value can not be less than %d", field, min)
+			errMsg = fmt.Errorf("the %s field value can not be less than %d", field, min)
 		default:
 			errMsg = fmt.Errorf("The %s field must be numeric value between %d and %d", field, min, max)
 		}
@@ -935,7 +935,8 @@ func init() {
 			if errs != nil {
 				return errMsg
 			}
-			if !(digit >= min && digit <= max) {
+			digit64 := int64(digit)
+			if !(digit64 >= min && digit64 <= max) {
 				return errMsg
 			}
 		}
